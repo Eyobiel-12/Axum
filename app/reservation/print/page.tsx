@@ -1,60 +1,95 @@
 "use client";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Clock, Users, MapPin, Crown } from "lucide-react";
 
-export default function ReservationPrintPage() {
+function PrintContent() {
   const searchParams = useSearchParams();
-
-  // Get data from query params, fallback to demo data
-  const reservation = {
-    confirmationNumber: searchParams.get("confirmationNumber") || "AXM915337",
-    date: searchParams.get("date") || "Friday, June 20th, 2025 at 7:00 PM",
-    guests: searchParams.get("guests") || 4,
-    name: searchParams.get("name") || "Eyobiel Gootom",
-    email: searchParams.get("email") || "eyobielgoitom10@gmail.com",
-    phone: searchParams.get("phone") || "+31687033774",
-    specialRequests: searchParams.get("specialRequests") || "eferferf",
-  };
+  const name = searchParams.get("name");
+  const date = searchParams.get("date");
+  const time = searchParams.get("time");
+  const guests = searchParams.get("guests");
+  const email = searchParams.get("email");
+  const phone = searchParams.get("phone");
+  const specialRequests = searchParams.get("specialRequests");
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      window.print();
-    }, 500);
-    return () => clearTimeout(timeout);
+    // Auto-print when the page loads
+    window.print();
   }, []);
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", fontFamily: "Segoe UI, sans-serif", background: "#fff", padding: 32 }}>
-      <div style={{ color: "#b91c1c", fontWeight: 700, marginBottom: 16 }}>DEBUG: This page is rendering and ready to print.</div>
-      <h1 style={{ color: "#fbbf24", textAlign: "center", marginBottom: 24 }}>Reservation Confirmed</h1>
-      <p style={{ textAlign: "center", marginBottom: 32 }}>Thank you for your reservation. We look forward to serving you an extraordinary dining experience.</p>
-      <h2 style={{ borderBottom: "2px solid #fbbf24", paddingBottom: 8, marginBottom: 16 }}>Reservation Details</h2>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Confirmation Number:</strong> <span>{reservation.confirmationNumber}</span>
+    <div className="min-h-screen bg-white p-8 print:p-0">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Crown className="w-6 h-6 text-amber-600" />
+            <h1 className="text-2xl font-light text-stone-800">Axum Restaurant</h1>
+          </div>
+          <p className="text-stone-600">Reservation Confirmation</p>
+        </div>
+
+        <Card className="border border-stone-200 shadow-none">
+          <CardContent className="p-6">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <Clock className="w-5 h-5 text-amber-600 mt-1" />
+                <div>
+                  <p className="font-medium text-stone-800">Reservation Details</p>
+                  <p className="text-stone-600">Date: {date}</p>
+                  <p className="text-stone-600">Time: {time}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <Users className="w-5 h-5 text-amber-600 mt-1" />
+                <div>
+                  <p className="font-medium text-stone-800">Guest Information</p>
+                  <p className="text-stone-600">Name: {name}</p>
+                  <p className="text-stone-600">Number of Guests: {guests}</p>
+                  <p className="text-stone-600">Email: {email}</p>
+                  <p className="text-stone-600">Phone: {phone}</p>
+                </div>
+              </div>
+
+              {specialRequests && (
+                <div className="flex items-start gap-4">
+                  <MapPin className="w-5 h-5 text-amber-600 mt-1" />
+                  <div>
+                    <p className="font-medium text-stone-800">Special Requests</p>
+                    <p className="text-stone-600">{specialRequests}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="mt-8 text-center text-sm text-stone-500">
+          <p>Please present this confirmation upon arrival</p>
+          <p className="mt-2">Thank you for choosing Axum Restaurant</p>
+        </div>
+
+        <div className="mt-8 text-center print:hidden">
+          <Button
+            onClick={() => window.print()}
+            className="bg-amber-600 hover:bg-amber-700 text-white"
+          >
+            Print Confirmation
+          </Button>
+        </div>
       </div>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Date & Time:</strong> <span>{reservation.date}</span>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Party Size:</strong> <span>{reservation.guests} guests</span>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Guest Name:</strong> <span>{reservation.name}</span>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Contact Information:</strong>
-        <div>{reservation.email}</div>
-        <div>{reservation.phone}</div>
-      </div>
-      <div style={{ marginBottom: 12 }}>
-        <strong>Special Requests:</strong>
-        <div>{reservation.specialRequests || "None"}</div>
-      </div>
-      <style>{`
-        @media print {
-          body { background: #fff !important; }
-        }
-      `}</style>
     </div>
+  );
+}
+
+export default function PrintPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PrintContent />
+    </Suspense>
   );
 } 
