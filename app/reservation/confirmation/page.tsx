@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef } from "react";
 
 // Example: get reservation data from query params or props
@@ -16,10 +17,6 @@ const reservation = {
 
 export default function ReservationConfirmationPage() {
   const printRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   return (
     <div ref={printRef} style={{ maxWidth: 600, margin: "0 auto", fontFamily: "Segoe UI, sans-serif", background: "#fff", padding: 32 }}>
@@ -50,8 +47,8 @@ export default function ReservationConfirmationPage() {
         <strong>Special Requests:</strong>
         <div>{reservation.specialRequests || "None"}</div>
       </div>
-      <button onClick={handlePrint} style={{ marginTop: 24, padding: "12px 32px", background: "#fbbf24", color: "#1a1a2e", border: "none", borderRadius: 8, fontWeight: 600, fontSize: 16, cursor: "pointer" }}>
-        Print / Download PDF
+      <button style={{ marginTop: 24, padding: "12px 32px", background: "#fbbf24", color: "#1a1a2e", border: "none", borderRadius: 8, fontWeight: 600, fontSize: 16, cursor: "pointer" }}>
+        Close
       </button>
       <style>{`
         @media print {
