@@ -1,13 +1,13 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, MapPin, Crown } from "lucide-react";
 
-function PrintContent() {
-  const searchParams = useSearchParams();
+// Separate component for the content
+function PrintContent({ searchParams }: { searchParams: URLSearchParams }) {
   const name = searchParams.get("name");
   const date = searchParams.get("date");
   const time = searchParams.get("time");
@@ -86,10 +86,26 @@ function PrintContent() {
   );
 }
 
+// Main page component
 export default function PrintPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PrintContent />
-    </Suspense>
-  );
-} 
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(null);
+
+  useEffect(() => {
+    // Get search params on client side
+    setSearchParams(new URLSearchParams(window.location.search));
+  }, []);
+
+  if (!searchParams) {
+    return <div>Loading...</div>;
+  }
+
+  return <PrintContent searchParams={searchParams} />;
+}
+
+// Add viewport metadata
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light",
+  themeColor: "#ffffff",
+}; 
