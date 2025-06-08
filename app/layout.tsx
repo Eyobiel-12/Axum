@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
@@ -23,6 +23,18 @@ const playfair = Playfair_Display({
   display: "swap",
   preload: true,
 })
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#d97706" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e293b" },
+  ],
+}
 
 export const metadata: Metadata = {
   title: {
@@ -103,17 +115,6 @@ export const metadata: Metadata = {
   category: "restaurant",
   classification: "business",
   referrer: "origin-when-cross-origin",
-  colorScheme: "light dark",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#d97706" },
-    { media: "(prefers-color-scheme: dark)", color: "#1e293b" },
-  ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   appleWebApp: {
     capable: true,
     title: "Axum Restaurant",
