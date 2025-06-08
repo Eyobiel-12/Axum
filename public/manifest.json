@@ -1,0 +1,26 @@
+{
+  "name": "Axum Restaurant - Authentic Ethiopian Fine Dining",
+  "short_name": "Axum Restaurant",
+  "description": "Experience the ancient flavors of the Axum Empire through modern culinary artistry. Authentic Ethiopian cuisine in Amsterdam.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#d97706",
+  "orientation": "portrait-primary",
+  "categories": ["food", "restaurant", "dining"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/images/axum-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/axum-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

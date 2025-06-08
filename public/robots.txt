@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://axumrestaurant.nl/sitemap.xml
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /scripts/
+
+# Allow important pages
+Allow: /
+Allow: /menu
+Allow: /reservations
+Allow: /gallery
+Allow: /about
+Allow: /contact
+
+# Crawl delay
+Crawl-delay: 1

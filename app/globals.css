@@ -1,0 +1,497 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .imperial-shimmer {
+    /* Luxury shimmer effects */
+    background: linear-gradient(to right, #f6e58d 0%, #fff 20%, #f6e58d 40%, #f6e58d 100%);
+    background-size: 150% 150%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2s linear infinite;
+  }
+
+  .imperial-float {
+    /* Floating particle animations */
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .imperial-glow {
+    /* Golden glow effects */
+    box-shadow: 0 0 10px #f6e58d;
+  }
+
+  .fade-in-imperial {
+    /* Imperial-themed fade transitions */
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .rtl-support {
+    /* Right-to-left text layout */
+    direction: rtl;
+    text-align: right;
+  }
+
+  .validation-error-imperial {
+    /* Form error animations */
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .loading-imperial {
+    /* Imperial-themed loading states */
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #f6e58d;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+
+  /* Add utility classes */
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.3s ease-out;
+  }
+
+  .shadow-3xl {
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .shadow-4xl {
+    box-shadow: 0 45px 80px -15px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-shadow-luxury {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .luxury-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .luxury-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+    pointer-events: none;
+  }
+
+  .luxury-card:hover::before {
+    left: 100%;
+  }
+
+  /* Mobile-specific color fixes */
+  @media (max-width: 768px) {
+    .mobile-color-fix {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+
+    .mobile-amber-fix {
+      background-color: #d97706 !important;
+      color: #ffffff !important;
+    }
+
+    .mobile-card-fix {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+      border: 1px solid rgba(217, 119, 6, 0.2) !important;
+    }
+
+    .mobile-text-fix {
+      color: #f8fafc !important;
+    }
+
+    .mobile-accent-fix {
+      color: #d97706 !important;
+    }
+
+    /* Mobile text color fixes for menu cards */
+    .menu-card h3,
+    .menu-card .price,
+    .menu-card p {
+      color: #ffffff !important;
+    }
+
+    .menu-card .dietary-badge {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  /* iOS Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    .ios-color-fix {
+      -webkit-appearance: none;
+      background-color: #1e293b !important;
+    }
+  }
+
+  /* Android Chrome specific fixes */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .android-color-fix {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Imperial Color Variables */
+    --imperial-gold: #f6e58d;
+    --imperial-purple: #6c5ce7;
+    --imperial-royal-blue: #487eb0;
+
+    /* Imperial Gradient Definitions */
+    --imperial-gradient-gold: linear-gradient(to right, #d4af37, #f6e58d);
+    --imperial-gradient-royal: linear-gradient(to right, #6c5ce7, #487eb0);
+
+    /* Mobile-specific color variables */
+    --mobile-dark: #1e293b;
+    --mobile-amber: #d97706;
+    --mobile-text: #f8fafc;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Font-face declarations for Tigrinya script support */
+  @font-face {
+    font-family: "Geez";
+    src: url("/fonts/geez.woff2") format("woff2"), url("/fonts/geez.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Responsive typography scales for different languages */
+  html {
+    font-size: 16px; /* Default font size */
+  }
+
+  /* Example for Tigrinya */
+  [lang="ti"] {
+    font-family: "Geez", serif;
+    font-size: 1.125rem; /* Slightly larger for better readability */
+  }
+
+  /* Mobile viewport color consistency */
+  @media (max-width: 768px) {
+    :root {
+      --background: 248 250 252; /* slate-50 */
+      --card: 30 41 59; /* slate-800 for mobile cards */
+      --card-foreground: 248 250 252; /* white text on dark cards */
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Imperial Decorative Element Styles */
+hr {
+  border: none;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--imperial-gold), rgba(0, 0, 0, 0));
+}
+
+/* Accessibility-focused styles */
+@media (prefers-contrast: more) {
+  body {
+    background-color: black;
+    color: white;
+  }
+  a {
+    text-decoration: underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile-specific color overrides */
+@media (max-width: 768px) {
+  .bg-slate-800 {
+    background-color: #1e293b !important;
+  }
+
+  .bg-amber-600 {
+    background-color: #d97706 !important;
+  }
+
+  .text-white {
+    color: #ffffff !important;
+  }
+
+  .text-amber-600 {
+    color: #d97706 !important;
+  }
+
+  /* Fix for mobile card backgrounds */
+  .card {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+  }
+
+  /* Fix for mobile form elements */
+  input,
+  textarea,
+  select {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    border-color: rgba(217, 119, 6, 0.3) !important;
+  }
+
+  /* Fix for mobile navigation */
+  .mobile-nav {
+    background-color: rgba(248, 250, 252, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  /* Mobile text color fixes for menu cards */
+  .menu-card h3,
+  .menu-card .price,
+  .menu-card p {
+    color: #ffffff !important;
+  }
+
+  .menu-card .dietary-badge {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Smooth transition classes for language switching */
+.language-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    font-size: 12pt;
+  }
+  /* Add more print-specific styles as needed */
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d97706;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b45309;
+}
+
+/* Focus styles for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #d97706;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Mobile Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .card,
+    .bg-slate-800 {
+      background-color: #1e293b !important;
+      -webkit-appearance: none;
+    }
+  }
+}

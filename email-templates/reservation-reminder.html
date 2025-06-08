@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Reminder - Axum Restaurant</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #44403c;
+            background-color: #fafaf9;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 1px;
+            background-color: #10b981;
+            margin: 20px auto;
+        }
+        
+        /* Main content */
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .reminder-title {
+            font-size: 28px;
+            color: #059669;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .reminder-subtitle {
+            text-align: center;
+            color: #78716c;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .countdown-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid #059669;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-text {
+            font-size: 18px;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+        
+        .countdown-time {
+            font-size: 32px;
+            font-weight: bold;
+            color: #047857;
+        }
+        
+        /* Reservation summary */
+        .reservation-summary {
+            background-color: #fafaf9;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 4px solid #059669;
+        }
+        
+        .summary-title {
+            font-size: 20px;
+            color: #44403c;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .summary-grid {
+            display: table;
+            width: 100%;
+        }
+        
+        .summary-row {
+            display: table-row;
+        }
+        
+        .summary-label {
+            display: table-cell;
+            padding: 8px 0;
+            font-weight: 600;
+            color: #57534e;
+            width: 40%;
+        }
+        
+        .summary-value {
+            display: table-cell;
+            padding: 8px 0;
+            color: #44403c;
+        }
+        
+        /* CTA Buttons */
+        .cta-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #f5f5f4;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e7e5e4;
+        }
+        
+        .footer-text {
+            color: #78716c;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .header,
+            .content,
+            .footer {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .reminder-title {
+                font-size: 24px;
+            }
+            
+            .countdown-time {
+                font-size: 24px;
+            }
+            
+            .summary-grid {
+                display: block;
+            }
+            
+            .summary-row {
+                display: block;
+                margin-bottom: 15px;
+            }
+            
+            .summary-label,
+            .summary-value {
+                display: block;
+                width: 100%;
+                padding: 0;
+            }
+            
+            .summary-label {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">AXUM</div>
+                <div class="tagline">Reservation Reminder</div>
+                <div class="divider"></div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <h1 class="reminder-title">Your Reservation is Tomorrow</h1>
+            <p class="reminder-subtitle">We're excited to welcome you to Axum Restaurant for an unforgettable dining experience.</p>
+            
+            <!-- Countdown -->
+            <div class="countdown-box">
+                <div class="countdown-text">Your reservation is in</div>
+                <div class="countdown-time">24 Hours</div>
+            </div>
+            
+            <!-- Reservation Summary -->
+            <div class="reservation-summary">
+                <h3 class="summary-title">Reservation Details</h3>
+                <div class="summary-grid">
+                    <div class="summary-row">
+                        <div class="summary-label">Guest Name:</div>
+                        <div class="summary-value">{{customer_name}}</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Date:</div>
+                        <div class="summary-value">{{reservation_date}}</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Time:</div>
+                        <div class="summary-value">{{reservation_time}}</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Party Size:</div>
+                        <div class="summary-value">{{party_size}} Guests</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="summary-label">Confirmation:</div>
+                        <div class="summary-value">{{confirmation_number}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="https://maps.app.goo.gl/6nHh4ctHQfMDcNHY9" class="cta-button">Get Directions</a>
+                <a href="tel:{{restaurant_phone}}" class="cta-button secondary">Call Restaurant</a>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                If you need to modify or cancel your reservation, please call us at {{restaurant_phone}} at least 24 hours in advance.<br>
+                We look forward to serving you at Axum Restaurant.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
