@@ -26,36 +26,36 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
       {/* Header */}
-      <section className="relative py-32 bg-gradient-to-br from-stone-900 via-stone-800 to-amber-900 text-white overflow-hidden">
+      <section className="relative py-16 md:py-32 bg-gradient-to-br from-stone-900 via-stone-800 to-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 border border-amber-400 rotate-45"></div>
-          <div className="absolute bottom-20 right-20 w-48 h-48 border border-amber-400 rotate-12"></div>
+          <div className="absolute top-20 left-20 w-64 h-64 border border-slate-400 rotate-45"></div>
+          <div className="absolute bottom-20 right-20 w-48 h-48 border border-slate-400 rotate-12"></div>
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-sm font-light tracking-[0.2em] text-amber-400 uppercase mb-4">Get in Touch</h1>
-          <div className="w-16 h-px bg-amber-400 mx-auto mb-8"></div>
-          <h2 className="text-6xl md:text-7xl font-extralight mb-6">Contact Us</h2>
-          <p className="text-xl text-stone-300 max-w-3xl mx-auto font-light leading-relaxed">
+          <h1 className="text-sm font-light tracking-[0.2em] text-slate-400 uppercase mb-4">Get in Touch</h1>
+          <div className="w-16 h-px bg-slate-400 mx-auto mb-8"></div>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight mb-6">Contact Us</h2>
+          <p className="text-lg md:text-xl text-stone-300 max-w-3xl mx-auto font-light leading-relaxed">
             We'd love to hear from you. Connect with our team for reservations, inquiries, or special requests
           </p>
         </div>
       </section>
 
       {/* Contact Content */}
-      <section className="py-20 min-h-screen">
+      <section className="py-10 md:py-20 min-h-screen">
         <div className="container mx-auto px-4 max-w-7xl h-full">
           {/* Main Contact Grid */}
-          <div className="grid xl:grid-cols-2 gap-16 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 md:gap-16 mb-8 md:mb-16">
             {/* Contact Form */}
             <div className="w-full">
               <Card className="shadow-2xl border-0 overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-amber-600 to-amber-700 text-white p-8">
-                  <CardTitle className="text-3xl font-light tracking-wide">Send us a Message</CardTitle>
-                  <p className="text-amber-100 font-light">We'll respond within 24 hours</p>
+                <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 md:p-8">
+                  <CardTitle className="text-2xl md:text-3xl font-light tracking-wide">Send us a Message</CardTitle>
+                  <p className="text-slate-100 font-light">We'll respond within 24 hours</p>
                 </CardHeader>
-                <CardContent className="p-8">
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
+                <CardContent className="p-4 md:p-8">
+                  <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="firstName" className="text-stone-700 font-light">
                           First Name
@@ -64,7 +64,7 @@ export default function ContactPage() {
                           id="firstName"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="border-stone-300 focus:border-amber-500 h-12"
+                          className="border-stone-300 focus:border-slate-500 h-12 w-full"
                           required
                         />
                       </div>
@@ -72,7 +72,7 @@ export default function ContactPage() {
                         <Label htmlFor="lastName" className="text-stone-700 font-light">
                           Last Name
                         </Label>
-                        <Input id="lastName" className="border-stone-300 focus:border-amber-500 h-12" required />
+                        <Input id="lastName" className="border-stone-300 focus:border-slate-500 h-12 w-full" required />
                       </div>
                     </div>
 
@@ -85,17 +85,17 @@ export default function ContactPage() {
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="border-stone-300 focus:border-amber-500 h-12"
+                        className="border-stone-300 focus:border-slate-500 h-12 w-full"
                         required
                       />
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-stone-700 font-light">
                           Phone Number
                         </Label>
-                        <Input id="phone" type="tel" className="border-stone-300 focus:border-amber-500 h-12" />
+                        <Input id="phone" type="tel" className="border-stone-300 focus:border-slate-500 h-12 w-full" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="subject" className="text-stone-700 font-light">
@@ -105,7 +105,7 @@ export default function ContactPage() {
                           value={formData.subject}
                           onValueChange={(value) => setFormData({ ...formData, subject: value })}
                         >
-                          <SelectTrigger className="h-12 border-stone-300 focus:border-amber-500">
+                          <SelectTrigger className="h-12 border-stone-300 focus:border-slate-500 w-full">
                             <SelectValue placeholder="Select a subject" />
                           </SelectTrigger>
                           <SelectContent>
@@ -131,14 +131,14 @@ export default function ContactPage() {
                         placeholder="Tell us how we can help you..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="border-stone-300 focus:border-amber-500 min-h-[200px]"
+                        className="border-stone-300 focus:border-slate-500 min-h-[200px] w-full"
                         required
                       />
                     </div>
 
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white py-4 text-lg font-light tracking-wide border-0 shadow-xl"
+                      className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white py-4 text-lg font-light tracking-wide border-0 shadow-xl"
                     >
                       Send Message
                     </Button>
@@ -148,19 +148,19 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-8">
+            <div className="space-y-4 md:space-y-8">
               {/* Contact Details */}
               <Card className="border-0 shadow-xl">
-                <CardContent className="p-8">
-                  <h3 className="text-3xl font-light text-stone-800 mb-8">Contact Information</h3>
-                  <div className="space-y-8">
-                    <div className="flex items-start gap-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-white" />
+                <CardContent className="p-4 md:p-8">
+                  <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-4 md:mb-8">Contact Information</h3>
+                  <div className="space-y-4 md:space-y-8">
+                    <div className="flex items-start gap-4 md:gap-6">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                        <MapPin className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium text-stone-800 mb-2">Address</h4>
-                        <p className="text-stone-600 font-light text-lg leading-relaxed">
+                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Address</h4>
+                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
                           Korte Leidsedwarsstraat 58
                           <br />
                           1017 RC Amsterdam, Netherlands
@@ -169,7 +169,7 @@ export default function ContactPage() {
                             href="https://maps.app.goo.gl/6nHh4ctHQfMDcNHY9"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-amber-600 hover:text-amber-700 transition-colors"
+                            className="text-slate-600 hover:text-slate-700 transition-colors"
                           >
                             View on Google Maps
                           </a>
@@ -177,30 +177,30 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center">
-                        <Phone className="w-6 h-6 text-white" />
+                    <div className="flex items-start gap-4 md:gap-6">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                        <Phone className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium text-stone-800 mb-2">Phone</h4>
-                        <p className="text-stone-600 font-light text-lg leading-relaxed">
-                          <a href="tel:+31206261472" className="hover:text-amber-600 transition-colors">
+                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Phone</h4>
+                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
+                          <a href="tel:+31206261472" className="hover:text-slate-600 transition-colors">
                             +31 20 626 1472
                           </a>
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center">
-                        <Mail className="w-6 h-6 text-white" />
+                    <div className="flex items-start gap-4 md:gap-6">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                        <Mail className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium text-stone-800 mb-2">Email</h4>
-                        <p className="text-stone-600 font-light text-lg leading-relaxed">
+                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Email</h4>
+                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
                           <a
                             href="mailto:axumrestaurantams@gmail.com"
-                            className="hover:text-amber-600 transition-colors"
+                            className="hover:text-slate-600 transition-colors"
                           >
                             axumrestaurantams@gmail.com
                           </a>
@@ -208,12 +208,12 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center">
-                        <Clock className="w-6 h-6 text-white" />
+                    <div className="flex items-start gap-4 md:gap-6">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                        <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium text-stone-800 mb-2">Operating Hours</h4>
+                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Operating Hours</h4>
                         <div className="space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="text-stone-600 font-light">Monday - Thursday</span>
@@ -235,14 +235,14 @@ export default function ContactPage() {
               </Card>
 
               {/* Additional Info Cards */}
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                 {/* Transportation */}
-                <Card className="border-0 shadow-xl bg-gradient-to-br from-amber-50 to-stone-50">
-                  <CardContent className="p-8">
-                    <h3 className="text-xl font-medium text-stone-800 mb-6">Getting Here</h3>
+                <Card className="border-0 shadow-xl bg-gradient-to-br from-slate-50 to-stone-50">
+                  <CardContent className="p-4 md:p-8">
+                    <h3 className="text-lg md:text-xl font-medium text-stone-800 mb-4 md:mb-6">Getting Here</h3>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <Car className="w-5 h-5 text-amber-600 mt-1" />
+                        <Car className="w-5 h-5 text-slate-600 mt-1" />
                         <div>
                           <p className="font-medium text-stone-800">Parking</p>
                           <p className="text-stone-600 text-sm font-light">Street parking available</p>
@@ -250,7 +250,7 @@ export default function ContactPage() {
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Train className="w-5 h-5 text-amber-600 mt-1" />
+                        <Train className="w-5 h-5 text-slate-600 mt-1" />
                         <div>
                           <p className="font-medium text-stone-800">Public Transit</p>
                           <p className="text-stone-600 text-sm font-light">Tram: Leidseplein (2 minutes walk)</p>
@@ -263,18 +263,18 @@ export default function ContactPage() {
 
                 {/* Recognition */}
                 <Card className="border-0 shadow-xl">
-                  <CardContent className="p-8">
+                  <CardContent className="p-4 md:p-8">
                     <div className="flex items-center gap-2 mb-4">
-                      <Award className="w-5 h-5 text-amber-600" />
-                      <h3 className="text-xl font-medium text-stone-800">Recognition</h3>
+                      <Award className="w-5 h-5 text-slate-600" />
+                      <h3 className="text-lg md:text-xl font-medium text-stone-800">Recognition</h3>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Star className="w-4 h-4 text-amber-600" />
+                        <Star className="w-4 h-4 text-slate-600" />
                         <span className="text-sm text-stone-600 font-light">Authentic Ethiopian Cuisine</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Star className="w-4 h-4 text-amber-600" />
+                        <Star className="w-4 h-4 text-slate-600" />
                         <span className="text-sm text-stone-600 font-light">Traditional Coffee Ceremony</span>
                       </div>
                     </div>
@@ -283,17 +283,17 @@ export default function ContactPage() {
               </div>
 
               {/* Private Events */}
-              <Card className="border-0 shadow-xl bg-gradient-to-r from-amber-600 to-amber-700 text-white overflow-hidden">
-                <CardContent className="p-8">
+              <Card className="border-0 shadow-xl bg-gradient-to-r from-slate-600 to-slate-700 text-white overflow-hidden">
+                <CardContent className="p-4 md:p-8">
                   <div className="flex items-center gap-2 mb-4">
                     <Star className="w-5 h-5" />
-                    <h3 className="text-xl font-medium">Private Events & Catering</h3>
+                    <h3 className="text-lg md:text-xl font-medium">Private Events & Catering</h3>
                   </div>
-                  <p className="text-amber-100 mb-6 font-light leading-relaxed">
+                  <p className="text-slate-100 mb-4 md:mb-6 font-light leading-relaxed">
                     Host your special event at Axum Restaurant. Our authentic Ethiopian cuisine and traditional
                     atmosphere are perfect for corporate events, celebrations, and intimate gatherings.
                   </p>
-                  <div className="grid grid-cols-2 gap-4 text-amber-100 text-sm mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-slate-100 text-sm mb-4 md:mb-6">
                     <p>• Private dining arrangements</p>
                     <p>• Traditional coffee ceremony</p>
                     <p>• Authentic Ethiopian platters</p>
@@ -301,7 +301,7 @@ export default function ContactPage() {
                   </div>
                   <Button
                     variant="outline"
-                    className="border-2 border-white text-white hover:bg-white hover:text-amber-600 font-light w-full"
+                    className="border-2 border-white text-white hover:bg-white hover:text-slate-600 font-light w-full"
                   >
                     <Mail className="w-4 h-4 mr-2" />
                     Inquire About Private Events
@@ -312,9 +312,9 @@ export default function ContactPage() {
           </div>
 
           {/* Interactive Map Section */}
-          <div className="mt-16">
+          <div className="mt-8 md:mt-16">
             <Card className="border-0 shadow-2xl overflow-hidden">
-              <div className="h-96 relative">
+              <div className="h-64 md:h-96 relative">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.757349753394!2d4.907358476707487!3d52.35668607201879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609cdb14c47a1%3A0x64f522c33ba5c9f6!2sAxum%20Restaurant!5e0!3m2!1sen!2snl!4v1748352542695!5m2!1sen!2snl"
                   width="100%"
@@ -325,7 +325,7 @@ export default function ContactPage() {
                   referrerPolicy="no-referrer-when-downgrade"
                   className="w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-stone-900/20 to-amber-900/20 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-stone-900/20 to-slate-900/20 pointer-events-none"></div>
               </div>
             </Card>
           </div>
