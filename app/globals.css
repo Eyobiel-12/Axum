@@ -304,59 +304,6 @@ hr {
   }
 }
 
-/* Mobile-specific color overrides */
-@media (max-width: 768px) {
-  .bg-slate-800 {
-    background-color: #1e293b !important;
-  }
-
-  .bg-amber-600 {
-    background-color: #d97706 !important;
-  }
-
-  .text-white {
-    color: #ffffff !important;
-  }
-
-  .text-amber-600 {
-    color: #d97706 !important;
-  }
-
-  /* Fix for mobile card backgrounds */
-  .card {
-    background-color: #1e293b !important;
-    color: #ffffff !important;
-  }
-
-  /* Fix for mobile form elements */
-  input,
-  textarea,
-  select {
-    background-color: #1e293b !important;
-    color: #ffffff !important;
-    border-color: rgba(217, 119, 6, 0.3) !important;
-  }
-
-  /* Fix for mobile navigation */
-  .mobile-nav {
-    background-color: rgba(248, 250, 252, 0.95) !important;
-    backdrop-filter: blur(10px) !important;
-  }
-
-  /* Mobile text color fixes for menu cards */
-  .menu-card h3,
-  .menu-card .price,
-  .menu-card p {
-    color: #ffffff !important;
-  }
-
-  .menu-card .dietary-badge {
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-  }
-}
-
 /* Animation Keyframes */
 @keyframes float {
   0%,
@@ -495,3 +442,6 @@ html {
     }
   }
 }
+
+/* Add a note to include this in your <head> for color-scheme consistency */
+/* <meta name="color-scheme" content="light"> */
