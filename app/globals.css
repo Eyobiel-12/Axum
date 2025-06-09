@@ -445,3 +445,9 @@ html {
 
 /* Add a note to include this in your <head> for color-scheme consistency */
 /* <meta name="color-scheme" content="light"> */
+
+/* Force neutral background for all form fields */
+input, textarea, select {
+  background-color: #fff !important;
+  color: #222 !important;
+}
