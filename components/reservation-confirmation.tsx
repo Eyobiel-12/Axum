@@ -339,24 +339,6 @@ export function ReservationConfirmation({
                 <Crown className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
                 Close
               </Button>
-              <Button
-                variant="outline"
-                onClick={handlePrint}
-                className="border-2 border-amber-600 text-amber-600 hover:bg-amber-50 py-3 px-6"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Print
-              </Button>
-              {navigator.share && (
-                <Button
-                  variant="outline"
-                  onClick={handleShare}
-                  className="border-2 border-amber-600 text-amber-600 hover:bg-amber-50 py-3 px-6"
-                >
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </Button>
-              )}
             </div>
           </CardContent>
         </Card>
