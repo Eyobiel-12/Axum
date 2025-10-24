@@ -1,10 +1,15 @@
 // Email template configurations for EmailJS
 
 export const EMAIL_TEMPLATES = {
-  CONFIRMATION: {
-    id: "template_dah30ui",
+  CUSTOMER_CONFIRMATION: {
+    id: "template_customer_confirmation",
     subject: "Reservation Confirmed - Axum Restaurant",
-    description: "Sent immediately after a successful reservation",
+    description: "Sent to customer immediately after successful reservation",
+  },
+  STAFF_NOTIFICATION: {
+    id: "template_staff_notification", 
+    subject: "New Reservation Alert - {{confirmation_number}}",
+    description: "Sent to staff when new reservation is made",
   },
   REMINDER: {
     id: "template_reminder_24h",

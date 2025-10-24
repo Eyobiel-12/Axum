@@ -1,8 +1,8 @@
 import emailjs from "@emailjs/browser"
 
 // EmailJS configuration for staff notifications
-const EMAILJS_SERVICE_ID = "service_g77c7qb"
-const EMAILJS_TEMPLATE_ID = "template_nh46s1o"
+const EMAILJS_SERVICE_ID = "service_knff5r5"
+const EMAILJS_TEMPLATE_ID = "template_staff_notification"
 const EMAILJS_USER_ID = "fT-abc-a8qyPCy5Ak"
 
 // Initialize EmailJS

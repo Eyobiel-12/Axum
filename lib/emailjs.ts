@@ -1,8 +1,8 @@
 import emailjs from "@emailjs/browser"
 
 // EmailJS configuration
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_g77c7qb"
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_nh46s1o"
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_knff5r5"
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_customer_confirmation"
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "fT-abc-a8qyPCy5Ak"
 
 // Initialize EmailJS (only needed once in your app)
@@ -66,11 +66,13 @@ const getDailyInspiration = () => {
   }
 }
 
-// Send notification to restaurant
-export const sendRestaurantNotification = async (data: ReservationEmailData): Promise<boolean> => {
+// Send confirmation to customer
+export const sendCustomerConfirmation = async (data: ReservationEmailData): Promise<boolean> => {
   try {
-    // Prepare template variables
+    // Prepare template variables for customer
     const templateParams = {
+      to_name: `${data.firstName} ${data.lastName}`,
+      to_email: data.email,
       customer_name: `${data.firstName} ${data.lastName}`,
       customer_email: data.email,
       customer_phone: data.phone,
@@ -86,14 +88,46 @@ export const sendRestaurantNotification = async (data: ReservationEmailData): Pr
       confirmation_number: data.confirmationNumber,
       table_preference: data.tablePreference || "No preference",
       occasion: data.occasion || "Regular dining",
-      notification_time: new Date().toLocaleString(),
-      urgency_level: new Date(data.date).getTime() - Date.now() < 24 * 60 * 60 * 1000 ? "HIGH" : "NORMAL",
-      // Add any other variables your template uses
     };
 
     await emailjs.send(
       EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
+      "template_customer_confirmation", // Customer template
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    );
+    return true;
+  } catch (error) {
+    console.error("Failed to send customer confirmation:", error);
+    return false;
+  }
+}
+
+// Send notification to restaurant
+export const sendRestaurantNotification = async (data: ReservationEmailData): Promise<boolean> => {
+  try {
+    // Prepare template variables (simplified to avoid EmailJS errors)
+    const templateParams = {
+      to_name: `${data.firstName} ${data.lastName}`,
+      customer_email: data.email,
+      customer_phone: data.phone,
+      reservation_date: new Date(data.date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      reservation_time: data.time,
+      party_size: data.guests,
+      special_requests: data.specialRequests || "None",
+      confirmation_number: data.confirmationNumber,
+      table_preference: data.tablePreference || "No preference",
+      occasion: data.occasion || "Regular dining",
+    };
+
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      "template_staff_notification", // Staff template
       templateParams,
       EMAILJS_PUBLIC_KEY
     );
@@ -104,7 +138,7 @@ export const sendRestaurantNotification = async (data: ReservationEmailData): Pr
   }
 }
 
-// Combined function to send restaurant notification only
+// Combined function to send only restaurant notification (no customer email)
 export const sendReservationEmails = async (
   data: ReservationEmailData,
 ): Promise<{
@@ -112,6 +146,7 @@ export const sendReservationEmails = async (
 }> => {
   console.log("Starting email sending process...")
 
+  // Only send staff notification, no customer email
   const restaurantResult = await sendRestaurantNotification(data)
 
   console.log("Email results:", { restaurantResult })

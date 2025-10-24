@@ -42,8 +42,7 @@ export function ImperialReservationForm({ onReservationComplete }: ImperialReser
   const [submittedData, setSubmittedData] = useState<any>(null) // Store submitted data separately
   const [emailStatus, setEmailStatus] = useState<{
     restaurant: "sending" | "success" | "error" | null
-    customer: "sending" | "success" | "error" | null
-  }>({ restaurant: null, customer: null })
+  }>({ restaurant: null })
   const [showEmailNotification, setShowEmailNotification] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -121,19 +120,18 @@ export function ImperialReservationForm({ onReservationComplete }: ImperialReser
       // Show confirmation modal first
       setShowConfirmation(true)
 
-      // Send both emails
-      setEmailStatus({ restaurant: "sending", customer: "sending" })
+      // Send only restaurant notification email
+      setEmailStatus({ restaurant: "sending" })
       setShowEmailNotification(true)
 
       try {
         const emailResults = await sendReservationEmails(emailData)
         setEmailStatus({
           restaurant: emailResults.restaurantNotification ? "success" : "error",
-          customer: emailResults.customerConfirmation ? "success" : "error",
         })
       } catch (error) {
         console.error("Email sending failed:", error)
-        setEmailStatus({ restaurant: "error", customer: "error" })
+        setEmailStatus({ restaurant: "error" })
       }
 
       // Call completion callback

@@ -25,7 +25,7 @@ export const SITE_CONFIG = {
 } as const
 
 export const EMAILJS_CONFIG = {
-  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_g77c7qb",
-  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_dah30ui",
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_knff5r5",
+  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_customer_confirmation",
   userId: process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "fT-abc-a8qyPCy5Ak",
 } as const
