@@ -127,7 +127,7 @@ export const sendRestaurantNotification = async (data: ReservationEmailData): Pr
 
     await emailjs.send(
       EMAILJS_SERVICE_ID,
-      "template_staff_notification", // Staff template
+      "template_03y5h7p", // Your existing template ID
       templateParams,
       EMAILJS_PUBLIC_KEY
     );
