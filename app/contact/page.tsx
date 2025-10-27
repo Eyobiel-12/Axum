@@ -295,8 +295,8 @@ export default function ContactPage() {
                       <div className="flex-1">
                         <h4 className="text-base md:text-xl font-medium text-stone-800 mb-2">Phone</h4>
                         <p className="text-stone-600 font-light text-sm md:text-lg leading-relaxed">
-                          <a href="tel:+31206261472" className="hover:text-slate-600 transition-colors text-lg md:text-xl">
-                            +31 20 626 1472
+                          <a href="tel:+31206633963" className="hover:text-slate-600 transition-colors text-lg md:text-xl">
+                            020 663 3963
                           </a>
                         </p>
                       </div>
@@ -327,16 +327,20 @@ export default function ContactPage() {
                         <h4 className="text-base md:text-xl font-medium text-stone-800 mb-3">Operating Hours</h4>
                         <div className="space-y-2.5">
                           <div className="flex justify-between items-center flex-wrap gap-x-4">
-                            <span className="text-stone-600 font-light text-sm md:text-base">Monday - Thursday</span>
-                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:00 PM</span>
+                            <span className="text-stone-600 font-light text-sm md:text-base">Monday</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">Closed</span>
+                          </div>
+                          <div className="flex justify-between items-center flex-wrap gap-x-4">
+                            <span className="text-stone-600 font-light text-sm md:text-base">Tuesday - Thursday</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:30 PM</span>
                           </div>
                           <div className="flex justify-between items-center flex-wrap gap-x-4">
                             <span className="text-stone-600 font-light text-sm md:text-base">Friday - Saturday</span>
-                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 11:00 PM</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 12:00 AM</span>
                           </div>
                           <div className="flex justify-between items-center flex-wrap gap-x-4">
                             <span className="text-stone-600 font-light text-sm md:text-base">Sunday</span>
-                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:00 PM</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:30 PM</span>
                           </div>
                         </div>
                       </div>

@@ -162,7 +162,7 @@ export default function RootLayout({
               name: "Axum Restaurant",
               description: "Authentic Ethiopian fine dining restaurant in Amsterdam",
               url: "https://axumrestaurant.nl",
-              telephone: "+31206261472",
+              telephone: "+31206633963",
               email: "axumrestaurantams@gmail.com",
               address: {
                 "@type": "PostalAddress",
@@ -176,7 +176,7 @@ export default function RootLayout({
                 latitude: "52.3575",
                 longitude: "4.9244",
               },
-              openingHours: ["Tu-Th 17:30-22:00", "Fr-Sa 17:30-22:30", "Su 17:30-21:30"],
+              openingHours: ["Tu-Th 17:00-22:30", "Fr-Sa 17:00-00:00", "Su 17:00-22:30"],
               servesCuisine: "Ethiopian",
               priceRange: "€€",
               acceptsReservations: true,
