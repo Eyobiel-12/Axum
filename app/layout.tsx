@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { PerformanceMonitor } from "@/components/performance-monitor"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { Preloader } from "@/components/preloader"
+import { Toaster } from "@/components/ui/toaster"
 import { Suspense } from "react"
 
 const inter = Inter({
@@ -165,15 +166,15 @@ export default function RootLayout({
               email: "axumrestaurantams@gmail.com",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "Korte Leidsedwarsstraat 58",
+                streetAddress: "Blasiusstraat 62",
                 addressLocality: "Amsterdam",
-                postalCode: "1017 RC",
+                postalCode: "1091 CV",
                 addressCountry: "NL",
               },
               geo: {
                 "@type": "GeoCoordinates",
-                latitude: "52.3667",
-                longitude: "4.8833",
+                latitude: "52.3575",
+                longitude: "4.9244",
               },
               openingHours: ["Tu-Th 17:30-22:00", "Fr-Sa 17:30-22:30", "Su 17:30-21:30"],
               servesCuisine: "Ethiopian",
@@ -197,6 +198,7 @@ export default function RootLayout({
           <Navigation />
           <main>{children}</main>
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

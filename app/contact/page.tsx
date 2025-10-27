@@ -1,26 +1,95 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { MapPin, Phone, Mail, Clock, Car, Train, Star, Award } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, Car, Train, Star, Award, MessageCircle, Send, Loader2, CheckCircle, Facebook, Instagram, Twitter, HelpCircle } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import * as emailjs from "@emailjs/browser"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export default function ContactPage() {
+  const [isVisible, setIsVisible] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
   })
+  const { toast } = useToast()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
+  useEffect(() => {
+    const initEmailJS = async () => {
+      if (typeof window !== "undefined") {
+        emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "public_key")
+      }
+    }
+    initEmailJS()
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Contact form submitted:", formData)
+    setIsSubmitting(true)
+
+    try {
+      const templateParams = {
+        from_name: `${formData.firstName} ${formData.lastName}`,
+        from_email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: "axumrestaurantams@gmail.com",
+      }
+
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_id",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_id",
+        templateParams
+      )
+
+      setIsSubmitted(true)
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you within 24 hours.",
+        duration: 5000,
+      })
+
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        })
+        setIsSubmitted(false)
+      }, 3000)
+    } catch (error) {
+      console.error("Email send error:", error)
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or call us directly.",
+        variant: "destructive",
+        duration: 5000,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -48,36 +117,48 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 md:gap-16 mb-8 md:mb-16">
             {/* Contact Form */}
             <div className="w-full">
-              <Card className="shadow-2xl border-0 overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 md:p-8">
-                  <CardTitle className="text-2xl md:text-3xl font-light tracking-wide">Send us a Message</CardTitle>
-                  <p className="text-slate-100 font-light">We'll respond within 24 hours</p>
+              <Card
+                className={`shadow-2xl border-0 overflow-hidden transition-all duration-1000 delay-100 ${
+                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                }`}
+              >
+                <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-6 md:p-8">
+                  <CardTitle className="text-xl md:text-3xl font-light tracking-wide">Send us a Message</CardTitle>
+                  <p className="text-slate-100 font-light text-sm md:text-base">We'll respond within 24 hours</p>
                 </CardHeader>
-                <CardContent className="p-4 md:p-8">
-                  <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <CardContent className="p-6 md:p-8">
+                  <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="firstName" className="text-stone-700 font-light">
+                        <Label htmlFor="firstName" className="text-stone-700 font-light text-sm md:text-base">
                           First Name
                         </Label>
                         <Input
                           id="firstName"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="border-stone-300 focus:border-slate-500 h-12 w-full"
+                          value={formData.firstName}
+                          onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                          className="border-stone-300 focus:border-slate-500 h-11 md:h-12 w-full text-sm md:text-base"
                           required
+                          disabled={isSubmitting || isSubmitted}
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="lastName" className="text-stone-700 font-light">
+                        <Label htmlFor="lastName" className="text-stone-700 font-light text-sm md:text-base">
                           Last Name
                         </Label>
-                        <Input id="lastName" className="border-stone-300 focus:border-slate-500 h-12 w-full" required />
+                        <Input
+                          id="lastName"
+                          value={formData.lastName}
+                          onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                          className="border-stone-300 focus:border-slate-500 h-11 md:h-12 w-full text-sm md:text-base"
+                          required
+                          disabled={isSubmitting || isSubmitted}
+                        />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="email" className="text-stone-700 font-light">
+                      <Label htmlFor="email" className="text-stone-700 font-light text-sm md:text-base">
                         Email Address
                       </Label>
                       <Input
@@ -85,27 +166,36 @@ export default function ContactPage() {
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="border-stone-300 focus:border-slate-500 h-12 w-full"
+                        className="border-stone-300 focus:border-slate-500 h-11 md:h-12 w-full text-sm md:text-base"
                         required
+                        disabled={isSubmitting || isSubmitted}
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-stone-700 font-light">
+                        <Label htmlFor="phone" className="text-stone-700 font-light text-sm md:text-base">
                           Phone Number
                         </Label>
-                        <Input id="phone" type="tel" className="border-stone-300 focus:border-slate-500 h-12 w-full" />
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="border-stone-300 focus:border-slate-500 h-11 md:h-12 w-full text-sm md:text-base"
+                          disabled={isSubmitting || isSubmitted}
+                        />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="subject" className="text-stone-700 font-light">
+                        <Label htmlFor="subject" className="text-stone-700 font-light text-sm md:text-base">
                           Subject
                         </Label>
                         <Select
                           value={formData.subject}
                           onValueChange={(value) => setFormData({ ...formData, subject: value })}
+                          disabled={isSubmitting || isSubmitted}
                         >
-                          <SelectTrigger className="h-12 border-stone-300 focus:border-slate-500 w-full">
+                          <SelectTrigger className="h-11 md:h-12 border-stone-300 focus:border-slate-500 w-full text-sm md:text-base">
                             <SelectValue placeholder="Select a subject" />
                           </SelectTrigger>
                           <SelectContent>
@@ -122,25 +212,42 @@ export default function ContactPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-stone-700 font-light">
+                      <Label htmlFor="message" className="text-stone-700 font-light text-sm md:text-base">
                         Message
                       </Label>
                       <Textarea
                         id="message"
-                        rows={8}
+                        rows={6}
                         placeholder="Tell us how we can help you..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="border-stone-300 focus:border-slate-500 min-h-[200px] w-full"
+                        className="border-stone-300 focus:border-slate-500 min-h-[140px] md:min-h-[200px] w-full text-sm md:text-base resize-none"
                         required
+                        disabled={isSubmitting || isSubmitted}
                       />
                     </div>
 
                     <Button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white py-4 text-lg font-light tracking-wide border-0 shadow-xl"
+                      disabled={isSubmitting || isSubmitted}
+                      className="w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white py-6 md:py-4 text-base md:text-lg font-light tracking-wide border-0 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Send Message
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 md:h-5 md:w-5 animate-spin" />
+                          <span className="text-sm md:text-base">Sending...</span>
+                        </>
+                      ) : isSubmitted ? (
+                        <>
+                          <CheckCircle className="mr-2 h-4 w-4 md:h-5 md:w-5" />
+                          <span className="text-sm md:text-base">Message Sent!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="mr-2 h-4 w-4 md:h-5 md:w-5" />
+                          <span className="text-sm md:text-base">Send Message</span>
+                        </>
+                      )}
                     </Button>
                   </form>
                 </CardContent>
@@ -150,54 +257,58 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="space-y-4 md:space-y-8">
               {/* Contact Details */}
-              <Card className="border-0 shadow-xl">
-                <CardContent className="p-4 md:p-8">
-                  <h3 className="text-2xl md:text-3xl font-light text-stone-800 mb-4 md:mb-8">Contact Information</h3>
-                  <div className="space-y-4 md:space-y-8">
-                    <div className="flex items-start gap-4 md:gap-6">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+              <Card
+                className={`border-0 shadow-xl transition-all duration-1000 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+              >
+                <CardContent className="p-6 md:p-8">
+                  <h3 className="text-xl md:text-3xl font-light text-stone-800 mb-6 md:mb-8">Contact Information</h3>
+                  <div className="space-y-6 md:space-y-8">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <MapPin className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Address</h4>
-                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
-                          Korte Leidsedwarsstraat 58
+                      <div className="flex-1">
+                        <h4 className="text-base md:text-xl font-medium text-stone-800 mb-2">Address</h4>
+                        <p className="text-stone-600 font-light text-sm md:text-lg leading-relaxed">
+                          Blasiusstraat 62
                           <br />
-                          1017 RC Amsterdam, Netherlands
+                          1091 CV Amsterdam, Netherlands
                           <br />
                           <a
-                            href="https://maps.app.goo.gl/6nHh4ctHQfMDcNHY9"
+                            href="https://maps.google.com/?q=Blasiusstraat+62,+1091+CV+Amsterdam"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-slate-600 hover:text-slate-700 transition-colors"
+                            className="text-slate-600 hover:text-slate-700 transition-colors underline mt-2 inline-block"
                           >
-                            View on Google Maps
+                            View on Google Maps →
                           </a>
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 md:gap-6">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <Phone className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Phone</h4>
-                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
-                          <a href="tel:+31206261472" className="hover:text-slate-600 transition-colors">
+                      <div className="flex-1">
+                        <h4 className="text-base md:text-xl font-medium text-stone-800 mb-2">Phone</h4>
+                        <p className="text-stone-600 font-light text-sm md:text-lg leading-relaxed">
+                          <a href="tel:+31206261472" className="hover:text-slate-600 transition-colors text-lg md:text-xl">
                             +31 20 626 1472
                           </a>
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 md:gap-6">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <Mail className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Email</h4>
-                        <p className="text-stone-600 font-light text-base md:text-lg leading-relaxed">
+                      <div className="flex-1">
+                        <h4 className="text-base md:text-xl font-medium text-stone-800 mb-2">Email</h4>
+                        <p className="text-stone-600 font-light text-sm md:text-lg leading-relaxed break-all">
                           <a
                             href="mailto:axumrestaurantams@gmail.com"
                             className="hover:text-slate-600 transition-colors"
@@ -208,24 +319,24 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 md:gap-6">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 md:w-12 md:h-12 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <Clock className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="text-lg md:text-xl font-medium text-stone-800 mb-2">Operating Hours</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-stone-600 font-light">Monday - Thursday</span>
-                            <span className="text-stone-700">5:00 PM - 10:00 PM</span>
+                      <div className="flex-1">
+                        <h4 className="text-base md:text-xl font-medium text-stone-800 mb-3">Operating Hours</h4>
+                        <div className="space-y-2.5">
+                          <div className="flex justify-between items-center flex-wrap gap-x-4">
+                            <span className="text-stone-600 font-light text-sm md:text-base">Monday - Thursday</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:00 PM</span>
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-stone-600 font-light">Friday - Saturday</span>
-                            <span className="text-stone-700">5:00 PM - 11:00 PM</span>
+                          <div className="flex justify-between items-center flex-wrap gap-x-4">
+                            <span className="text-stone-600 font-light text-sm md:text-base">Friday - Saturday</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 11:00 PM</span>
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-stone-600 font-light">Sunday</span>
-                            <span className="text-stone-700">5:00 PM - 10:00 PM</span>
+                          <div className="flex justify-between items-center flex-wrap gap-x-4">
+                            <span className="text-stone-600 font-light text-sm md:text-base">Sunday</span>
+                            <span className="text-stone-700 font-medium text-sm md:text-base">5:00 PM - 10:00 PM</span>
                           </div>
                         </div>
                       </div>
@@ -237,7 +348,11 @@ export default function ContactPage() {
               {/* Additional Info Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                 {/* Transportation */}
-                <Card className="border-0 shadow-xl bg-gradient-to-br from-slate-50 to-stone-50">
+                <Card
+                  className={`border-0 shadow-xl bg-gradient-to-br from-slate-50 to-stone-50 transition-all duration-1000 delay-200 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
+                >
                   <CardContent className="p-4 md:p-8">
                     <h3 className="text-lg md:text-xl font-medium text-stone-800 mb-4 md:mb-6">Getting Here</h3>
                     <div className="space-y-4">
@@ -262,7 +377,11 @@ export default function ContactPage() {
                 </Card>
 
                 {/* Recognition */}
-                <Card className="border-0 shadow-xl">
+                <Card
+                  className={`border-0 shadow-xl transition-all duration-1000 delay-300 ${
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                  }`}
+                >
                   <CardContent className="p-4 md:p-8">
                     <div className="flex items-center gap-2 mb-4">
                       <Award className="w-5 h-5 text-slate-600" />
@@ -282,8 +401,70 @@ export default function ContactPage() {
                 </Card>
               </div>
 
+              {/* Social Media */}
+              <Card
+                className={`border-0 shadow-xl transition-all duration-1000 delay-400 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+              >
+                <CardContent className="p-4 md:p-8">
+                  <div className="flex items-center gap-2 mb-6">
+                    <MessageCircle className="w-5 h-5 text-slate-600" />
+                    <h3 className="text-lg md:text-xl font-medium text-stone-800">Connect With Us</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <a
+                      href="https://www.facebook.com/axumrestaurant"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                    >
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Facebook className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-stone-800">Facebook</p>
+                        <p className="text-sm text-stone-600 font-light">Follow us for updates</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://www.instagram.com/axumrestaurant"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                    >
+                      <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Instagram className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-stone-800">Instagram</p>
+                        <p className="text-sm text-stone-600 font-light">See our latest dishes</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://twitter.com/axumrestaurant"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                    >
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Twitter className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-stone-800">Twitter</p>
+                        <p className="text-sm text-stone-600 font-light">Stay in touch</p>
+                      </div>
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* Private Events */}
-              <Card className="border-0 shadow-xl bg-gradient-to-r from-slate-600 to-slate-700 text-white overflow-hidden">
+              <Card
+                className={`border-0 shadow-xl bg-gradient-to-r from-slate-600 to-slate-700 text-white overflow-hidden transition-all duration-1000 delay-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+              >
                 <CardContent className="p-4 md:p-8">
                   <div className="flex items-center gap-2 mb-4">
                     <Star className="w-5 h-5" />
@@ -312,11 +493,15 @@ export default function ContactPage() {
           </div>
 
           {/* Interactive Map Section */}
-          <div className="mt-8 md:mt-16">
-            <Card className="border-0 shadow-2xl overflow-hidden">
-              <div className="h-64 md:h-96 relative">
+          <div
+            className={`mt-8 md:mt-16 transition-all duration-1000 delay-600 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
+          >
+            <Card className="border-0 shadow-2xl overflow-hidden hover:shadow-3xl transition-shadow duration-500">
+              <div className="h-64 md:h-96 relative group">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2436.757349753394!2d4.907358476707487!3d52.35668607201879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609cdb14c47a1%3A0x64f522c33ba5c9f6!2sAxum%20Restaurant!5e0!3m2!1sen!2snl!4v1748352542695!5m2!1sen!2snl"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.599999996218!2d4.9244!3d52.3575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c60c3e3c6d5c73%3A0x7c1a8b9f3c1a9f3f!2sBlasiusstraat%2062%2C%201091%20CV%20Amsterdam!5e0!3m2!1sen!2snl!4v1738765432100!5m2!1sen!2snl"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -327,6 +512,92 @@ export default function ContactPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-stone-900/20 to-slate-900/20 pointer-events-none"></div>
               </div>
+            </Card>
+          </div>
+
+          {/* FAQ Section */}
+          <div
+            className={`mt-8 md:mt-16 transition-all duration-1000 delay-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
+          >
+            <Card className="border-0 shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 md:p-8">
+                <div className="flex items-center gap-3">
+                  <HelpCircle className="w-8 h-8 md:w-10 md:h-10" />
+                  <CardTitle className="text-2xl md:text-3xl font-light tracking-wide">Frequently Asked Questions</CardTitle>
+                </div>
+                <p className="text-slate-100 font-light">Everything you need to know about visiting Axum</p>
+              </CardHeader>
+              <CardContent className="p-4 md:p-8">
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      Do you accept walk-ins or do I need a reservation?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      While we welcome walk-ins based on availability, we highly recommend making a reservation, especially
+                      for weekends and evening dining. Reservations ensure you have a table guaranteed at your preferred time.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-2" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      Do you accommodate dietary restrictions?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      Absolutely! We offer vegetarian, vegan, and gluten-free options. Our menu is clearly marked with
+                      dietary information, and our staff is trained to accommodate various dietary requirements. Please
+                      inform us of any allergies or restrictions when making your reservation.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-3" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      What is the traditional Ethiopian coffee ceremony?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      The coffee ceremony is a beautiful Ethiopian tradition involving three rounds of coffee, roasted and
+                      brewed fresh before you. It takes about an hour and can be enjoyed by groups of up to 4 people. We
+                      recommend booking this experience when you make your reservation.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-4" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      Do you host private events or large groups?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      Yes! We offer private dining arrangements and can accommodate groups for corporate events,
+                      celebrations, and intimate gatherings. Contact us via the form above or email us directly to discuss
+                      your needs and we'll create a customized experience for your group.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-5" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      Is there parking available near the restaurant?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      Street parking is available nearby, and there are also public parking facilities within a few minutes'
+                      walk. We're also easily accessible by public transport - the Leidseplein tram stop is just 2 minutes
+                      away.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="item-6" className="border-stone-200">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                      What should I expect from my first visit?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                      Expect an authentic Ethiopian dining experience! Your meal will be served family-style on injera, a
+                      traditional sourdough flatbread. You'll be eating with your hands, Ethiopian style. Don't worry if
+                      you're not familiar with the cuisine - our friendly staff will guide you through the experience. It's
+                      a wonderful cultural adventure!
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </CardContent>
             </Card>
           </div>
         </div>
