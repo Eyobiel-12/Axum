@@ -95,26 +95,26 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white">
       {/* Header */}
-      <section className="relative py-16 md:py-32 bg-gradient-to-br from-stone-900 via-stone-800 to-slate-900 text-white overflow-hidden">
+      <section className="relative py-12 md:py-32 bg-gradient-to-br from-stone-900 via-stone-800 to-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 border border-slate-400 rotate-45"></div>
-          <div className="absolute bottom-20 right-20 w-48 h-48 border border-slate-400 rotate-12"></div>
+          <div className="absolute top-20 left-20 w-32 h-32 md:w-64 md:h-64 border border-slate-400 rotate-45"></div>
+          <div className="absolute bottom-20 right-20 w-24 h-24 md:w-48 md:h-48 border border-slate-400 rotate-12"></div>
         </div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-sm font-light tracking-[0.2em] text-slate-400 uppercase mb-4">Get in Touch</h1>
-          <div className="w-16 h-px bg-slate-400 mx-auto mb-8"></div>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight mb-6">Contact Us</h2>
-          <p className="text-lg md:text-xl text-stone-300 max-w-3xl mx-auto font-light leading-relaxed">
+        <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
+          <h1 className="text-xs sm:text-sm font-light tracking-[0.2em] text-slate-400 uppercase mb-3 md:mb-4">Get in Touch</h1>
+          <div className="w-12 sm:w-16 h-px bg-slate-400 mx-auto mb-6 md:mb-8"></div>
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extralight mb-4 md:mb-6 px-4 sm:px-0">Contact Us</h2>
+          <p className="text-base sm:text-lg md:text-xl text-stone-300 max-w-3xl mx-auto font-light leading-relaxed px-2 sm:px-0">
             We'd love to hear from you. Connect with our team for reservations, inquiries, or special requests
           </p>
         </div>
       </section>
 
       {/* Contact Content */}
-      <section className="py-10 md:py-20 min-h-screen">
-        <div className="container mx-auto px-4 max-w-7xl h-full">
+      <section className="py-8 md:py-20 min-h-screen">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl h-full">
           {/* Main Contact Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 md:gap-16 mb-8 md:mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 sm:gap-8 md:gap-16 mb-6 md:mb-16">
             {/* Contact Form */}
             <div className="w-full">
               <Card
@@ -255,7 +255,7 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Information */}
-            <div className="space-y-4 md:space-y-8">
+            <div className="space-y-4 sm:space-y-6 md:space-y-8">
               {/* Contact Details */}
               <Card
                 className={`border-0 shadow-xl transition-all duration-1000 ${
@@ -353,23 +353,23 @@ export default function ContactPage() {
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                   }`}
                 >
-                  <CardContent className="p-4 md:p-8">
-                    <h3 className="text-lg md:text-xl font-medium text-stone-800 mb-4 md:mb-6">Getting Here</h3>
+                  <CardContent className="p-5 md:p-8">
+                    <h3 className="text-base md:text-xl font-medium text-stone-800 mb-4 md:mb-6">Getting Here</h3>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <Car className="w-5 h-5 text-slate-600 mt-1" />
+                        <Car className="w-5 h-5 text-slate-600 mt-1 flex-shrink-0" />
                         <div>
-                          <p className="font-medium text-stone-800">Parking</p>
-                          <p className="text-stone-600 text-sm font-light">Street parking available</p>
-                          <p className="text-stone-600 text-sm font-light">Public parking nearby</p>
+                          <p className="font-medium text-stone-800 text-sm md:text-base">Parking</p>
+                          <p className="text-stone-600 text-xs md:text-sm font-light">Street parking available</p>
+                          <p className="text-stone-600 text-xs md:text-sm font-light">Public parking nearby</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <Train className="w-5 h-5 text-slate-600 mt-1" />
+                        <Train className="w-5 h-5 text-slate-600 mt-1 flex-shrink-0" />
                         <div>
-                          <p className="font-medium text-stone-800">Public Transit</p>
-                          <p className="text-stone-600 text-sm font-light">Tram: Leidseplein (2 minutes walk)</p>
-                          <p className="text-stone-600 text-sm font-light">Metro: Rokin (10 minutes walk)</p>
+                          <p className="font-medium text-stone-800 text-sm md:text-base">Public Transit</p>
+                          <p className="text-stone-600 text-xs md:text-sm font-light">Tram: Leidseplein (2 min walk)</p>
+                          <p className="text-stone-600 text-xs md:text-sm font-light">Metro: Rokin (10 min walk)</p>
                         </div>
                       </div>
                     </div>
@@ -382,19 +382,19 @@ export default function ContactPage() {
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                   }`}
                 >
-                  <CardContent className="p-4 md:p-8">
+                  <CardContent className="p-5 md:p-8">
                     <div className="flex items-center gap-2 mb-4">
-                      <Award className="w-5 h-5 text-slate-600" />
-                      <h3 className="text-lg md:text-xl font-medium text-stone-800">Recognition</h3>
+                      <Award className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                      <h3 className="text-base md:text-xl font-medium text-stone-800">Recognition</h3>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                        <Star className="w-4 h-4 text-slate-600" />
-                        <span className="text-sm text-stone-600 font-light">Authentic Ethiopian Cuisine</span>
+                        <Star className="w-4 h-4 text-slate-600 flex-shrink-0" />
+                        <span className="text-xs md:text-sm text-stone-600 font-light">Authentic Ethiopian Cuisine</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Star className="w-4 h-4 text-slate-600" />
-                        <span className="text-sm text-stone-600 font-light">Traditional Coffee Ceremony</span>
+                        <Star className="w-4 h-4 text-slate-600 flex-shrink-0" />
+                        <span className="text-xs md:text-sm text-stone-600 font-light">Traditional Coffee Ceremony</span>
                       </div>
                     </div>
                   </CardContent>
@@ -407,52 +407,52 @@ export default function ContactPage() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
               >
-                <CardContent className="p-4 md:p-8">
+                <CardContent className="p-5 md:p-8">
                   <div className="flex items-center gap-2 mb-6">
-                    <MessageCircle className="w-5 h-5 text-slate-600" />
-                    <h3 className="text-lg md:text-xl font-medium text-stone-800">Connect With Us</h3>
+                    <MessageCircle className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                    <h3 className="text-base md:text-xl font-medium text-stone-800">Connect With Us</h3>
                   </div>
                   <div className="space-y-3">
                     <a
                       href="https://www.facebook.com/axumrestaurant"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group active:bg-slate-100"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
                         <Facebook className="w-5 h-5 text-white" />
                       </div>
-                      <div>
-                        <p className="font-medium text-stone-800">Facebook</p>
-                        <p className="text-sm text-stone-600 font-light">Follow us for updates</p>
+                      <div className="min-w-0">
+                        <p className="font-medium text-stone-800 text-sm md:text-base">Facebook</p>
+                        <p className="text-xs md:text-sm text-stone-600 font-light">Follow us for updates</p>
                       </div>
                     </a>
                     <a
                       href="https://www.instagram.com/axumrestaurant"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group active:bg-slate-100"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
                         <Instagram className="w-5 h-5 text-white" />
                       </div>
-                      <div>
-                        <p className="font-medium text-stone-800">Instagram</p>
-                        <p className="text-sm text-stone-600 font-light">See our latest dishes</p>
+                      <div className="min-w-0">
+                        <p className="font-medium text-stone-800 text-sm md:text-base">Instagram</p>
+                        <p className="text-xs md:text-sm text-stone-600 font-light">See our latest dishes</p>
                       </div>
                     </a>
                     <a
                       href="https://twitter.com/axumrestaurant"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group active:bg-slate-100"
                     >
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
                         <Twitter className="w-5 h-5 text-white" />
                       </div>
-                      <div>
-                        <p className="font-medium text-stone-800">Twitter</p>
-                        <p className="text-sm text-stone-600 font-light">Stay in touch</p>
+                      <div className="min-w-0">
+                        <p className="font-medium text-stone-800 text-sm md:text-base">Twitter</p>
+                        <p className="text-xs md:text-sm text-stone-600 font-light">Stay in touch</p>
                       </div>
                     </a>
                   </div>
@@ -465,16 +465,16 @@ export default function ContactPage() {
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 }`}
               >
-                <CardContent className="p-4 md:p-8">
+                <CardContent className="p-5 md:p-8">
                   <div className="flex items-center gap-2 mb-4">
-                    <Star className="w-5 h-5" />
-                    <h3 className="text-lg md:text-xl font-medium">Private Events & Catering</h3>
+                    <Star className="w-5 h-5 flex-shrink-0" />
+                    <h3 className="text-base md:text-xl font-medium">Private Events & Catering</h3>
                   </div>
-                  <p className="text-slate-100 mb-4 md:mb-6 font-light leading-relaxed">
+                  <p className="text-slate-100 mb-4 md:mb-6 font-light leading-relaxed text-sm md:text-base">
                     Host your special event at Axum Restaurant. Our authentic Ethiopian cuisine and traditional
                     atmosphere are perfect for corporate events, celebrations, and intimate gatherings.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-slate-100 text-sm mb-4 md:mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 text-slate-100 text-xs md:text-sm mb-4 md:mb-6">
                     <p>• Private dining arrangements</p>
                     <p>• Traditional coffee ceremony</p>
                     <p>• Authentic Ethiopian platters</p>
@@ -482,7 +482,7 @@ export default function ContactPage() {
                   </div>
                   <Button
                     variant="outline"
-                    className="border-2 border-white text-white hover:bg-white hover:text-slate-600 font-light w-full"
+                    className="border-2 border-white text-white hover:bg-white hover:text-slate-600 font-light w-full text-sm md:text-base py-6 md:py-4"
                   >
                     <Mail className="w-4 h-4 mr-2" />
                     Inquire About Private Events
@@ -494,12 +494,12 @@ export default function ContactPage() {
 
           {/* Interactive Map Section */}
           <div
-            className={`mt-8 md:mt-16 transition-all duration-1000 delay-600 ${
+            className={`mt-6 sm:mt-8 md:mt-16 transition-all duration-1000 delay-600 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
             <Card className="border-0 shadow-2xl overflow-hidden hover:shadow-3xl transition-shadow duration-500">
-              <div className="h-64 md:h-96 relative group">
+              <div className="h-56 sm:h-64 md:h-96 relative group">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2435.599999996218!2d4.9244!3d52.3575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c60c3e3c6d5c73%3A0x7c1a8b9f3c1a9f3f!2sBlasiusstraat%2062%2C%201091%20CV%20Amsterdam!5e0!3m2!1sen!2snl!4v1738765432100!5m2!1sen!2snl"
                   width="100%"
@@ -517,35 +517,35 @@ export default function ContactPage() {
 
           {/* FAQ Section */}
           <div
-            className={`mt-8 md:mt-16 transition-all duration-1000 delay-700 ${
+            className={`mt-6 sm:mt-8 md:mt-16 transition-all duration-1000 delay-700 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
             <Card className="border-0 shadow-2xl">
-              <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 md:p-8">
+              <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700 text-white p-5 md:p-8">
                 <div className="flex items-center gap-3">
-                  <HelpCircle className="w-8 h-8 md:w-10 md:h-10" />
-                  <CardTitle className="text-2xl md:text-3xl font-light tracking-wide">Frequently Asked Questions</CardTitle>
+                  <HelpCircle className="w-6 h-6 md:w-10 md:h-10 flex-shrink-0" />
+                  <CardTitle className="text-xl md:text-3xl font-light tracking-wide">Frequently Asked Questions</CardTitle>
                 </div>
-                <p className="text-slate-100 font-light">Everything you need to know about visiting Axum</p>
+                <p className="text-slate-100 font-light text-sm md:text-base mt-2">Everything you need to know about visiting Axum</p>
               </CardHeader>
-              <CardContent className="p-4 md:p-8">
+              <CardContent className="p-5 md:p-8">
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="item-1" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       Do you accept walk-ins or do I need a reservation?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       While we welcome walk-ins based on availability, we highly recommend making a reservation, especially
                       for weekends and evening dining. Reservations ensure you have a table guaranteed at your preferred time.
                     </AccordionContent>
                   </AccordionItem>
 
                   <AccordionItem value="item-2" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       Do you accommodate dietary restrictions?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       Absolutely! We offer vegetarian, vegan, and gluten-free options. Our menu is clearly marked with
                       dietary information, and our staff is trained to accommodate various dietary requirements. Please
                       inform us of any allergies or restrictions when making your reservation.
@@ -553,10 +553,10 @@ export default function ContactPage() {
                   </AccordionItem>
 
                   <AccordionItem value="item-3" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       What is the traditional Ethiopian coffee ceremony?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       The coffee ceremony is a beautiful Ethiopian tradition involving three rounds of coffee, roasted and
                       brewed fresh before you. It takes about an hour and can be enjoyed by groups of up to 4 people. We
                       recommend booking this experience when you make your reservation.
@@ -564,10 +564,10 @@ export default function ContactPage() {
                   </AccordionItem>
 
                   <AccordionItem value="item-4" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       Do you host private events or large groups?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       Yes! We offer private dining arrangements and can accommodate groups for corporate events,
                       celebrations, and intimate gatherings. Contact us via the form above or email us directly to discuss
                       your needs and we'll create a customized experience for your group.
@@ -575,10 +575,10 @@ export default function ContactPage() {
                   </AccordionItem>
 
                   <AccordionItem value="item-5" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       Is there parking available near the restaurant?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       Street parking is available nearby, and there are also public parking facilities within a few minutes'
                       walk. We're also easily accessible by public transport - the Leidseplein tram stop is just 2 minutes
                       away.
@@ -586,10 +586,10 @@ export default function ContactPage() {
                   </AccordionItem>
 
                   <AccordionItem value="item-6" className="border-stone-200">
-                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600">
+                    <AccordionTrigger className="text-left font-medium text-stone-800 hover:text-slate-600 text-sm md:text-base">
                       What should I expect from my first visit?
                     </AccordionTrigger>
-                    <AccordionContent className="text-stone-600 font-light leading-relaxed">
+                    <AccordionContent className="text-stone-600 font-light leading-relaxed text-sm md:text-base">
                       Expect an authentic Ethiopian dining experience! Your meal will be served family-style on injera, a
                       traditional sourdough flatbread. You'll be eating with your hands, Ethiopian style. Don't worry if
                       you're not familiar with the cuisine - our friendly staff will guide you through the experience. It's
